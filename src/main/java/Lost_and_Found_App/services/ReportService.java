@@ -1,11 +1,7 @@
 package Lost_and_Found_App.services;
 
-import Lost_and_Found_App.enums.ItemCategory;
-import Lost_and_Found_App.enums.ItemStatus;
-import Lost_and_Found_App.enums.ReportExceptionType;
-import Lost_and_Found_App.enums.ReportType;
+import Lost_and_Found_App.enums.*;
 import Lost_and_Found_App.exceptions.ReportException;
-
 import Lost_and_Found_App.models.Item;
 import Lost_and_Found_App.models.Report;
 import Lost_and_Found_App.repositories.ReportRepository;
@@ -20,6 +16,7 @@ public class ReportService {
 
     private ReportRepository reportRepository;
     private ReportValidationService reportValidationService;
+
     public ReportService()
     {
         this.reportRepository=new ReportRepository();
@@ -31,7 +28,7 @@ public class ReportService {
 
     {
 
-        Report report = new Report(ReportType.LOST,item, ItemStatus.OPEN);
+        Report report = new Report(ReportType.LOST,item, ReportStatus.OPEN);
         if(!reportValidationService.validateReportDate(report))
         {
             throw new ReportException(ReportExceptionType.REPORT_DATE_INCORRECT);
@@ -62,7 +59,8 @@ public class ReportService {
         }
         return reportList;
     }
-
+    /// ////////////////////////////////
+/// search by Filters section
     public List<Report> filterByItemName(String itemName)
     {
         return getReportList().stream().filter(t -> t.getItem().getItemName().equals(itemName)).collect(Collectors.toList());
@@ -73,9 +71,81 @@ public class ReportService {
         return getReportList().stream().filter(r->r.getItem().getItemCategory().name().equals(category.name())).collect(Collectors.toList());
     }
 
-    /// i tak dalee po oceredi
+    public List<Report> filterByCaseLocation(String location)
+    {
+
+        return getReportList().stream().filter(l->l.getCaseLocation().equals(location)).collect(Collectors.toList());
+    }
+
+    public List<Report> filterByReportType(ReportType type)
+    {
+        return getReportList().stream().filter(c->c.getReportType().equals(type)).collect(Collectors.toList());
+    }
 
 
+    public List<Report> filterByCaseStatus(ReportStatus status)
+    {
+
+        return getReportList().stream().filter(s->s.getReportStatus().equals(status)).collect(Collectors.toList());
+    }
+
+    /// end of search by filters section
+/// //////////////////////////////////////
+
+    public void updateReportDetails(Long id)
+    {
+
+        Report sourceReport = reportRepository.getReportById(id);
+        /// then will be modification
+        sourceReport.getItem().setItemName("Updated Name");
+        sourceReport.getItem().setItemDescription("Updated Description");
+        sourceReport.getItem().setItemCategory(ItemCategory.UPDATED);
+        sourceReport.setCaseLocation("Updated location");
+
+        reportRepository.updateReport(id,sourceReport);
+        System.out.println("Report has been updated");
+
+    }
+
+    public void claimReportStatus(Long id)
+    {
+        Report report = reportRepository.getReportById(id);
+        if(!reportValidationService.validateForClaimT(report))
+        {
+            throw new ReportException(ReportExceptionType.REPORT_NOT_CLAIMABLE);
+        }
+        report.setReportStatus(ReportStatus.CLAIMED);
+        reportRepository.updateReport(id,report);
 
 
+    }
+
+    public void closeReportStatus(Long id)
+    {
+        Report r = reportRepository.getReportById(id);
+        if(reportValidationService.validatePreCloseF(r))
+        {
+            throw new ReportException(ReportExceptionType.REPORT_IS_CLOSED);
+        }
+        r.setReportStatus(ReportStatus.CLOSED);
+            reportRepository.updateReport(id,r);
+        System.out.println("DETAILS: " + r);
+    }
+
+
+    public Long deleteReport(Long id)
+    {
+
+
+        Report r = reportRepository.getReportById(id);
+        Long itemId = r.getItem().getId();
+        if(!reportValidationService.validatePreDeletionT(r))
+        {
+            throw new ReportException(ReportExceptionType.REPORT_IS_NOT_CLOSED);
+        }
+
+        reportRepository.deleteReport(id);
+        System.out.println("Report has been deleted.");
+        return itemId;
+    }
 }

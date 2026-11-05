@@ -1,5 +1,6 @@
 package Lost_and_Found_App.services;
 
+import Lost_and_Found_App.Util.LocalUtil;
 import Lost_and_Found_App.enums.ItemCategory;
 import Lost_and_Found_App.models.Item;
 import Lost_and_Found_App.repositories.ItemRepository;
@@ -39,5 +40,14 @@ public class ItemService {
 
         return itemList;
     }
+
+    public void deleteItemById(Long id)
+    {
+
+        itemRepository.deleteItem(itemRepository.getItem(id));
+    }
+
+
+
 
 }

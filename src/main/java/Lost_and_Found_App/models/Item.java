@@ -2,10 +2,6 @@ package Lost_and_Found_App.models;
 
 import Lost_and_Found_App.Util.LocalUtil;
 import Lost_and_Found_App.enums.ItemCategory;
-import Lost_and_Found_App.enums.ItemStatus;
-import Lost_and_Found_App.enums.ReportType;
-
-import java.time.ZonedDateTime;
 
 public class Item {
 

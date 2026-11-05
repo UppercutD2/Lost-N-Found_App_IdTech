@@ -1,7 +1,7 @@
 package Lost_and_Found_App.models;
 
 import Lost_and_Found_App.Util.LocalUtil;
-import Lost_and_Found_App.enums.ItemStatus;
+import Lost_and_Found_App.enums.ReportStatus;
 import Lost_and_Found_App.enums.ReportType;
 
 import java.time.ZonedDateTime;
@@ -13,12 +13,12 @@ public class Report {
     private String caseLocation;
     private ZonedDateTime reportDateTime;
     private Item item;
-    private ItemStatus itemStatus;
+    private ReportStatus reportStatus;
 
 
 
-    public Report(ReportType reportType, Item item, ItemStatus itemStatus) {
-        this.itemStatus = itemStatus;
+    public Report(ReportType reportType, Item item, ReportStatus reportStatus) {
+        this.reportStatus = reportStatus;
         this.reportType = reportType;
         this.reportDateTime = ZonedDateTime.now();
         this.item = item;
@@ -39,12 +39,12 @@ public class Report {
         return item;
     }
 
-    public ItemStatus getItemStatus() {
-        return itemStatus;
+    public ReportStatus getReportStatus() {
+        return reportStatus;
     }
 
-    public void setItemStatus(ItemStatus itemStatus) {
-        this.itemStatus = itemStatus;
+    public void setReportStatus(ReportStatus reportStatus) {
+        this.reportStatus = reportStatus;
     }
 
     public void setItem(Item item) {
@@ -82,6 +82,7 @@ public class Report {
                 ", reportType=" + reportType +
                 ", caseLocation='" + caseLocation + '\'' +
                 ", reportDateTime=" + reportDateTime +
+                ",caseStatus=" + reportStatus.name()+
                 "\n--" + item.toString() +
                 '}';
     }

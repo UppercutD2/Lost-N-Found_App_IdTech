@@ -5,5 +5,6 @@ public enum ItemCategory {
     JEWELRY,
     ACCESSORIES,
     CLOTHES,
-    OTHER;
+    OTHER,
+    UPDATED
 }
