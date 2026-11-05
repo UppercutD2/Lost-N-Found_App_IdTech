@@ -1,0 +1,88 @@
+package Lost_and_Found_App.models;
+
+import Lost_and_Found_App.Util.LocalUtil;
+import Lost_and_Found_App.enums.ItemStatus;
+import Lost_and_Found_App.enums.ReportType;
+
+import java.time.ZonedDateTime;
+
+public class Report {
+
+    private Long reportId;
+    private ReportType reportType;
+    private String caseLocation;
+    private ZonedDateTime reportDateTime;
+    private Item item;
+    private ItemStatus itemStatus;
+
+
+
+    public Report(ReportType reportType, Item item, ItemStatus itemStatus) {
+        this.itemStatus = itemStatus;
+        this.reportType = reportType;
+        this.reportDateTime = ZonedDateTime.now();
+        this.item = item;
+    }
+
+    public Long getReportId() {
+        return reportId;
+    }
+    public void setReportId()
+    {
+        this.reportId=LocalUtil.assignReportId();
+
+
+    }
+
+
+    public Item getItem() {
+        return item;
+    }
+
+    public ItemStatus getItemStatus() {
+        return itemStatus;
+    }
+
+    public void setItemStatus(ItemStatus itemStatus) {
+        this.itemStatus = itemStatus;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public ReportType getReportType() {
+        return reportType;
+    }
+
+    public void setReportType(ReportType reportType) {
+        this.reportType = reportType;
+    }
+
+    public String getCaseLocation() {
+        return caseLocation;
+    }
+
+    public void setCaseLocation(String caseLocation) {
+        this.caseLocation = caseLocation;
+    }
+
+    public ZonedDateTime getReportDateTime() {
+        return reportDateTime;
+    }
+
+    public void setReportDateTime(ZonedDateTime reportDateTime) {
+        this.reportDateTime = reportDateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "-REPORT{" +
+                "reportId=" + reportId +
+                ", reportType=" + reportType +
+                ", caseLocation='" + caseLocation + '\'' +
+                ", reportDateTime=" + reportDateTime +
+                "\n--" + item.toString() +
+                '}';
+    }
+}

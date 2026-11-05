@@ -1,0 +1,119 @@
+CAMPUS LOST & FOUND PORTAL
+
+PROJECT BRIEF
+
+Create a Java console application that simulates the core behavior of a web-based
+campus Lost & Found portal. Students can report items they have lost or found,
+browse and search reports, and track whether a found item is still available,
+has been requested by its owner, or has been resolved.
+
+The console menu represents the actions a user could perform through a web
+application. Store all data in memory using Java collections. Do not use a
+database, file storage, a web framework, or a network service. Data does not
+need to survive when the application exits.
+
+BUSINESS REQUIREMENTS
+
+1. LOST-AND-FOUND REPORTS
+
+Each report must contain:
+
+- ID: Unique, positive integer assigned by the application; users must not
+  supply or change it.
+- Report type: LOST or FOUND.
+- Item name: Required, non-blank text.
+- Description: Required, non-blank text describing the item; may include
+  identifying details.
+- Category: Required, non-blank text, such as electronics, clothing, keys, or
+  books.
+- Location: Required, non-blank text indicating where the item was lost or
+  found.
+- Date reported: Required date in YYYY-MM-DD format; it must not be in the
+  future.
+- Status: One of OPEN, CLAIMED, or CLOSED; new reports start as OPEN. CLAIMED
+  means someone says the found item is theirs and wants to collect it.
+
+2. MAIN MENU AND OPERATIONS
+
+Show a menu repeatedly until the user chooses to exit. Provide these operations:
+
+1. Add a report: Ask for its type and required details, validate them, assign a
+   unique ID, save the report, and display the created report or its ID.
+2. List reports: Display all reports, including their IDs and statuses. If
+   there are no reports, show a clear empty-state message.
+3. Get a report: Find and display a report by ID. If no report has that ID,
+   explain that it was not found.
+4. Search and filter reports: Allow users to find reports by item name,
+   category, location, report type, or status. Text matching must be
+   case-insensitive and may match part of a value. Users may combine filters.
+   Clearly report when there are no matches.
+5. Update a report: Find a report by ID and allow the user to update its item
+   name, description, category, or location. Validate new values before
+   saving. The ID and date reported cannot be changed. Report type cannot be
+   changed after creation.
+6. Mark a found item as requested for pickup: Find a report by ID and change
+   its status from OPEN to CLAIMED. This means someone says the item is theirs
+   and wants to collect it; it does not mean the item has already been picked
+   up.
+7. Close a report: Find an OPEN or CLAIMED report and change its status to
+   CLOSED.
+8. Delete a report: Find a report by ID and permanently remove it from the
+   in-memory collection. Ask for confirmation before deleting.
+9. Exit: End the application cleanly.
+
+3. PICKUP REQUEST AND STATUS RULES
+
+- Only a FOUND report with status OPEN can be marked as requested for pickup.
+- A LOST report cannot be marked as requested for pickup.
+- A CLAIMED or CLOSED report cannot be marked as requested for pickup again.
+- Only reports with status OPEN or CLAIMED can be closed.
+- A CLOSED report cannot be marked as requested for pickup or reopened.
+- When a requested action is not allowed, leave the report unchanged and show
+  an informative message.
+
+4. INPUT AND ERROR HANDLING
+
+- Reject blank required text and invalid menu choices, IDs, dates, report
+  types, and statuses.
+- Report IDs must be positive integers. If an ID does not exist, do not modify
+  or delete any report.
+- Invalid input must not terminate the application; prompt again or return to
+  the menu with a clear error message.
+- For deletion, proceed only after an affirmative confirmation; otherwise keep
+  the report unchanged.
+- Display a clear success or failure message after every operation.
+
+TECHNICAL REQUIREMENTS
+
+- Use Java and at least one Java collection (for example, ArrayList or HashMap)
+  as the in-memory store.
+- Do not use a database or persist data to files.
+- Represent a report with a suitable class. Keep the menu/input handling
+  separate from the logic that manages reports where practical.
+- Implement add, get, list, search/filter, update,
+  mark-as-requested-for-pickup, close, and delete behavior; do not make menu
+  options that only print placeholder messages.
+- Use readable names, consistent formatting, and appropriate access modifiers.
+
+ACCEPTANCE CRITERIA
+
+The application is complete when a user can run it and:
+
+- Add both LOST and FOUND reports and receive unique generated IDs.
+- List all reports, retrieve an existing report by ID, and receive a useful
+  message for an unknown ID.
+- Search using each supported field and combine filters.
+- Update editable fields without changing the report ID, date, or type.
+- Mark an open found report as requested for pickup, while invalid attempts
+  leave report data unchanged.
+- Close eligible reports and reject closing an already closed report.
+- Confirm deletion to remove a report, or decline deletion to preserve it.
+- Continue using the menu after invalid input and exit without an exception.
+
+EXAMPLE
+
+If report 12 is a FOUND report with status OPEN, marking it as requested for
+pickup changes its status to CLAIMED. This means someone says the item is theirs
+and wants to collect it; it does not confirm pickup. Attempting to mark it again
+must leave it CLAIMED and explain that it is no longer available for a new
+pickup request.
