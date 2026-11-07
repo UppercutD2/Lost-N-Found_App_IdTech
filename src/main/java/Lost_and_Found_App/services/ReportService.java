@@ -42,6 +42,10 @@ public class ReportService {
     public void addReport(Report report)
     {
         report.setReportId();
+        if(!reportValidationService.validateReportDate(report))
+        {
+            throw new ReportException(ReportExceptionType.REPORT_DATE_INCORRECT);
+        }
         reportRepository.registerReport(report);
     }
 
@@ -99,7 +103,7 @@ public class ReportService {
         /// then will be modification
         sourceReport.getItem().setItemName("Updated Name");
         sourceReport.getItem().setItemDescription("Updated Description");
-        sourceReport.getItem().setItemCategory(ItemCategory.UPDATED);
+        sourceReport.getItem().setItemCategory(ItemCategory.ACCESSORIES);
         sourceReport.setCaseLocation("Updated location");
 
         reportRepository.updateReport(id,sourceReport);
