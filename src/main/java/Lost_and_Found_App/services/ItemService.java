@@ -24,7 +24,7 @@ public class ItemService {
 
     public Item createItem()
     {
-        return new Item("Пачка чая", "Зеленый с чебрецом)", ItemCategory.OTHER);
+        return new Item("Пачка чая", "Зеленый с чебрецом,можно и курить.", ItemCategory.OTHER);
     }
 
 

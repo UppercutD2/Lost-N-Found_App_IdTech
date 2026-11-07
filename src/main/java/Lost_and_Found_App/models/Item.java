@@ -3,6 +3,8 @@ package Lost_and_Found_App.models;
 import Lost_and_Found_App.Util.LocalUtil;
 import Lost_and_Found_App.enums.ItemCategory;
 
+import java.util.Objects;
+
 public class Item {
 
     private Long id;
@@ -15,7 +17,7 @@ public class Item {
         this.itemCategory = itemCategory;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
-        this.id = LocalUtil.assignItemId();
+
     }
 
 
@@ -25,6 +27,11 @@ public class Item {
 
     public void setId() {
         this.id = LocalUtil.assignItemId();
+    }
+
+    public void orderId(Long id)
+    {
+        this.id=id;
     }
 
     public String getItemName() {
@@ -49,6 +56,19 @@ public class Item {
 
     public void setItemCategory(ItemCategory itemCategory) {
         this.itemCategory = itemCategory;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id) && Objects.equals(itemName, item.itemName) && Objects.equals(itemDescription, item.itemDescription) && itemCategory == item.itemCategory;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, itemName, itemDescription, itemCategory);
     }
 
     @Override

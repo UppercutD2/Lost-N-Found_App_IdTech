@@ -6,4 +6,27 @@
   <version>version25</version>
   <name>Archetype - IdTech_Exam_04_Nov_2026</name>
   <url>http://maven.apache.org</url>
+
+
+
+
+<dependencies>
+
+  <!-- Source: https://mvnrepository.com/artifact/junit/junit -->
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.13.2</version>
+    <scope>test</scope>
+  </dependency>
+
+
+
+</dependencies>
+  <properties>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+  </properties>
+
+
 </project>
